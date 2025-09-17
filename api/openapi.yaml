@@ -1,4 +1,4 @@
-openapi: 3.1.1
+openapi: 3.0.3
 info:
   title: Go API
   version: 1.0.0
@@ -30,7 +30,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /album/{id}/:
+  /album/{id}:
     get:
       summary: Find album by ID
       operationId: getAlbumById
