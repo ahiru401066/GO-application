@@ -14,6 +14,8 @@ import (
 	"time"
 
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/timeout"
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	middleware "github.com/oapi-codegen/gin-middleware"
 	swaggerfiles "github.com/swaggo/files"
@@ -32,6 +34,22 @@ func corsMiddleware(allowOrigins []string) gin.HandlerFunc {
 	return cors.New(config)
 }
 
+func timeoutMiddleware(duration time.Duration) gin.HandlerFunc {
+	return timeout.New(
+		timeout.WithTimeout(duration),
+		timeout.WithHandler(func(c *gin.Context) {
+			c.Next()
+		}),
+		timeout.WithResponse(func(c *gin.Context) {
+			c.JSON(
+				http.StatusRequestTimeout,
+				api.ErrorResponse{Message: "timeout"},
+			)
+			c.Abort()
+		}),
+	)
+}
+
 func main() {
 	if err := models.SetDatabase(models.InstanceMySQL); err != nil {
 		logger.Fatal(err.Error())
@@ -39,6 +57,8 @@ func main() {
 
 	router := gin.Default()
 
+	router.Use(ginzap.Ginzap(logger.ZapLogger, time.RFC3339, true))
+	router.Use(ginzap.RecoveryWithZap(logger.ZapLogger, true))
 	router.Use(corsMiddleware(configs.Config.APICorsAllowOrigins))
 
 	swagger, err := api.GetSwagger()
@@ -60,6 +80,7 @@ func main() {
 
 	apiGroup := router.Group("/api")
 	{
+		apiGroup.Use(timeoutMiddleware(2 * time.Second))
 		v1 := apiGroup.Group("/v1")
 		{
 			v1.Use(middleware.OapiRequestValidator(swagger))
