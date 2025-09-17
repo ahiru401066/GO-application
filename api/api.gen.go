@@ -295,7 +295,7 @@ func NewDeleteAlbumByIdRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/album/%s/", pathParam0)
+	operationPath := fmt.Sprintf("/album/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -329,7 +329,7 @@ func NewGetAlbumByIdRequest(server string, id int) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/album/%s/", pathParam0)
+	operationPath := fmt.Sprintf("/album/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -374,7 +374,7 @@ func NewUpdateAlbumByIdRequestWithBody(server string, id int, contentType string
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/album/%s/", pathParam0)
+	operationPath := fmt.Sprintf("/album/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -752,13 +752,13 @@ type ServerInterface interface {
 	// (POST /album)
 	CreateAlbum(c *gin.Context)
 	// Delete a album by iD
-	// (DELETE /album/{id}/)
+	// (DELETE /album/{id})
 	DeleteAlbumById(c *gin.Context, id int)
 	// Find album by ID
-	// (GET /album/{id}/)
+	// (GET /album/{id})
 	GetAlbumById(c *gin.Context, id int)
 	// Update a album by ID
-	// (PATCH /album/{id}/)
+	// (PATCH /album/{id})
 	UpdateAlbumById(c *gin.Context, id int)
 }
 
@@ -884,26 +884,26 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 	}
 
 	router.POST(options.BaseURL+"/album", wrapper.CreateAlbum)
-	router.DELETE(options.BaseURL+"/album/:id/", wrapper.DeleteAlbumById)
-	router.GET(options.BaseURL+"/album/:id/", wrapper.GetAlbumById)
-	router.PATCH(options.BaseURL+"/album/:id/", wrapper.UpdateAlbumById)
+	router.DELETE(options.BaseURL+"/album/:id", wrapper.DeleteAlbumById)
+	router.GET(options.BaseURL+"/album/:id", wrapper.GetAlbumById)
+	router.PATCH(options.BaseURL+"/album/:id", wrapper.UpdateAlbumById)
 }
 
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"H4sIAAAAAAAC/+xWX2vbMBD/Kua2RxPbXWFFb226ljDoRmBPpQ+qdUlUbEmVzh0h+LsPSUlj1+kfRue9",
-	"lLwYc7r7/Ts5Gyh1bbRCRQ7YBly5wpqHx9PqtqmnFjnhHO8bdOTfGqsNWpIYakpOuNR27Z8/W1wAg0/Z",
-	"vmO2bZdNd3VtChYr5A7POeFrx+ad0jYFklSFM7Q2CAwcWamW0Iam9420KIBdb8vSPbj+zJt0d17f3mFJ",
-	"vnPgOkdntHI4pMmVkg9oHX+d6WmntE3/SiApOhylIlyiHUU4KSA9pF6X/hu1/GXEe+fmBRJDDH3DhlpO",
-	"OwD60J5TX/E6TEfV1F6shdZerrpxsoQUnNGWXEeQZzQObQ7J9s1abZ+PYI3O8eUbTNwVHpox7ydooW3N",
-	"CRh4r2CI3GdRLXSYGcWHS52c/pxBCl5dqRUwKCb5JPfdtUHFjQQGXybFpIAUDKdVQJ9xH4rASsc8eG6c",
-	"pFYzAQziNROSA5EOOjrTIvhTakWowiluTCXLcC67c3787sp6dS+Ht1nbl45sg+FFtCDgPsqL90XwaHAY",
-	"LtCVVhqKQkZ0wkt5nOfvNrcfrANzz7hI9pqk4Jq6DouzRZTwROHvJFroC6Kb2UaKNvPTBVYYE9V39Ty8",
-	"D7zP1jMRAmF5jYTWAbvegPTjfUhgt1/xDuqbknaIPt3L9mbg2HGE1GV4pZPpVsr/Kq6ffTze7CtNyYVu",
-	"lHhia/Ql4dHS5HadyHMPbokHVvMSaWwH8/F27sf3j0QAgwupxD4Ns5AGw6lcDfMQv+wjROIffQP6/0ze",
-	"9A0YMY8RnfgI5aMW3WvKBzPUoH3Yxa2xFTBYERmWZfkk/NhJfpJn3MjsoYA2fVJU6ZJXK+3o5bLi6Gvo",
-	"VvTLbto/AQAA//+LFLs7NA0AAA==",
+	"H4sIAAAAAAAC/+xWTWvjPBD+K2be92hipy1s8a1NtyUsdJfAnkoPqjVJVGxJlcZdQvB/XzRKGrtOP1i6",
+	"2UvJxZjRzPM1ctZQmtoajZo8FGvw5RJrwY9n1V1TTxwKwhk+NOgpvLXOWHSkkGtKQbgwbhWe/3c4hwL+",
+	"y3Yds027bLKta1NwWKHweCEI3zo265S2KZCiis/QyiIU4MkpvYCWmz40yqGE4mZTlu7A9Wfeptvz5u4e",
+	"SwqdmesMvTXa45Cm0Fo9ovPibaZnndI2/SOBlOxwVJpwge4gwikJ6T71uvTfqeVPKz86N6+QGGLoGzbU",
+	"ctIB0If2kvpa1DwddVMHsebGBLnqxqsSUvDWOPIdQV7QmNvsk+2rc8a9HMEavReLd5i4Ldw3Y9ZP0Ny4",
+	"WhAUELyCIfKQRT03PDOKD1cmOfsxhRSCuspoKGA8ykd56G4samEVFHA8ykfHkIIVtGT0mQihYFYm5iFw",
+	"E6SMnkooIF4znByIdNDTuZHsT2k0oeZTwtpKlXwuu/dh/PbKenMvh7dZ25eOXIP8IlrAuI/y8ccieDKY",
+	"h0v0pVOWopARnQxSnuT5h83tB2vP3HMhk50mKfimrnlxNogSkWj8lUQLQ0F0M1sr2YbhEiuMgeqbesHv",
+	"mfb5aio5D07USOg8FDdrUGF6yAhs1yteQX1P0g7P52vZ3g4MO4mQugSvTTLZKPlPtQ2zTw43+9pQcmka",
+	"LZ+5Gn1JRHQ0uVsl6iKAW+CezbxCOrSD+eFW7vu3z0RAAZdKy10appwGK6hcDvMQP+wHiMRf+gT0/5i8",
+	"6xNwwDxGdPIzlE9adK+pEEyuQfe4jVvjKihgSWSLLMtH/CtO89M8E1Zlj2No02dFlSlFtTSeXi8bH33h",
+	"buN+2W37OwAA//8bxUTxMw0AAA==",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
