@@ -2,7 +2,7 @@ package pkg
 
 import "time"
 
-type Click interface {
+type Clock interface {
 	Now() time.Time
 }
 
