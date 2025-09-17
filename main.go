@@ -47,6 +47,8 @@ func main() {
 		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	}
 
+	router.GET("/health", controllers.Health)
+
 	apiGroup := router.Group("/api")
 	{
 		v1 := apiGroup.Group("/v1")
