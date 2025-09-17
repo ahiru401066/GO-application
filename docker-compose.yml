@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: app
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: api_database
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "mysql"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: always
+    volumes:
+      - ./external-apps/db/:/docker-entrypoint-initdb.d
+    networks:
+      - api-network
+
+  mysql-cli:
+    image: mysql:8.0
+    command: mysql -hmysql -uapp -ppassword api_database
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
