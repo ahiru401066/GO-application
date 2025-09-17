@@ -72,7 +72,7 @@ func (a *AlbumHandler) UpdateAlbumById(c *gin.Context, ID int) {
 	c.JSON(http.StatusOK, album)
 }
 
-func (a *AlbumHandler) Delete(c *gin.Context, ID int) {
+func (a *AlbumHandler) DeleteAlbumById(c *gin.Context, ID int) {
 	album := models.Album{ID: ID}
 
 	if err := album.Delete(); err != nil {
