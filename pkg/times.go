@@ -14,8 +14,8 @@ func (RealClock) Now() time.Time {
 
 func GetAdjustedReleaseDay(releaseDate time.Time, now time.Time) int {
 	releaseDay := releaseDate.YearDay()
-	currentDay := now.Year()
-	if isLeap(releaseDate) && isLeap(now) && releaseDay >= 60 {
+	currentDay := now.YearDay()
+	if isLeap(releaseDate) && !isLeap(now) && releaseDay >= 60 {
 		return releaseDay - 1
 	}
 	if isLeap(now) && !isLeap(releaseDate) && currentDay >= 60 {

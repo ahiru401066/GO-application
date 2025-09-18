@@ -3,6 +3,7 @@ module album
 go 1.24.4
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/getkin/kin-openapi v0.133.0
 	github.com/gin-contrib/cors v1.7.6
 	github.com/gin-contrib/timeout v1.0.1
